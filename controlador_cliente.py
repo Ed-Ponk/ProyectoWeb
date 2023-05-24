@@ -1,11 +1,11 @@
 from bd import obtener_conexion
 
 
-def insertar_cliente(nombres, contraseña, email):
+def insertar_cliente(nombres, apellido, dni, email, telefono):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
-        cursor.execute("INSERT INTO cliente(nombres, contraseña, email) VALUES (%s, %s, %s)",
-                       (nombres, contraseña, email))
+        cursor.execute("INSERT INTO cliente(nombres, apellido, dni, email, telefono) VALUES (%s, %s, %s, %s, %s)",
+                       (nombres, apellido, dni, email, telefono))
     conexion.commit()
     conexion.close()
 
@@ -30,19 +30,19 @@ def eliminar_cliente(id):
 
 def obtener_cliente_por_id(id):
     conexion = obtener_conexion()
-    juego = None
+    cliente = None
     with conexion.cursor() as cursor:
         cursor.execute(
             "SELECT * FROM cliente WHERE id_cliente = %s", (id,))
-        juego = cursor.fetchone()
+        cliente = cursor.fetchone()
     conexion.close()
-    return juego
+    return cliente
 
 
-def actualizar_cliente(nombres, contraseña, email, vigencia, id_cliente):
+def actualizar_cliente(nombres, apellido, dni, email, telefono, vigencia, id_cliente):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
-        cursor.execute("UPDATE cliente SET nombres = %s, contraseña = %s, email = %s, vigencia = %s WHERE id_cliente = %s",
-                       (nombres, contraseña, email, vigencia, id_cliente))
+        cursor.execute("UPDATE cliente SET nombres = %s, apellido = %s, dni= %s, email = %s, telefono = %s, vigencia = %s WHERE id_cliente = %s",
+                       (nombres, apellido, dni, email, telefono, vigencia, id_cliente))
     conexion.commit()
     conexion.close()
