@@ -1,59 +1,50 @@
 from bd import obtener_conexion
 
 
-def insertar_categoria(nombre):
+def insertar_venta(fecha, total, cliente_id, metodo_pago_id, usuario_id):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
-        cursor.execute("INSERT INTO categoria(nombre) VALUES (%s)",
-                       (nombre,))
+        cursor.execute("INSERT INTO venta(fecha, total, cliente_id, metodo_pago_id, usuario_id) VALUES (%s, %s, %s, %s, %s)",
+                       (fecha, total, cliente_id, metodo_pago_id, usuario_id))
     conexion.commit()
     conexion.close()
 
 
-def obtener_categoria():
+def obtener_venta():
     conexion = obtener_conexion()
-    categorias = []
+    ventas = []
     with conexion.cursor() as cursor:
-        cursor.execute("SELECT * FROM categoria where vigencia=true")
-        categorias = cursor.fetchall()
+        cursor.execute("SELECT * FROM venta")
+        ventas = cursor.fetchall()
     conexion.close()
-    return categorias
+    return ventas
 
 
-def eliminar_categoria(id):
+def eliminar_venta(id):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
-        cursor.execute("DELETE FROM categoria WHERE id_categoria = %s", (id,))
+        cursor.execute("DELETE FROM venta WHERE id_venta = %s", (id,))
     conexion.commit()
     conexion.close()
 
 
-def obtener_categoria_por_id(id):
+def obtener_venta_por_id(id):
     conexion = obtener_conexion()
-    categoria = None
+    venta = None
     with conexion.cursor() as cursor:
         cursor.execute(
-            "SELECT * FROM categoria WHERE id_categoria = %s", (id,))
-        categoria = cursor.fetchone()
+            "SELECT * FROM venta WHERE id_venta = %s", (id,))
+        venta = cursor.fetchone()
     conexion.close()
-    return categoria
+    return venta
 
-def actualizar_categoria(nombre, vigencia, id_categoria):
+def actualizar_venta(fecha, total, cliente_id, metodo_pago_id, usuario_id, id_venta):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
-        cursor.execute("UPDATE categoria SET nombre = %s, vigencia = %s WHERE id_categoria = %s",
-                       (nombre, vigencia, id_categoria))
+        cursor.execute("UPDATE venta SET fecha = %s, total = %s, cliente_id = %s, metodo_pago_id = %s, usuario_id = %s WHERE id_venta = %s",
+                       (fecha, total, cliente_id, metodo_pago_id, usuario_id, id_venta))
     conexion.commit()
     conexion.close()
 
 
 #extra
-def obtener_categoria_por_name(name):
-    conexion = obtener_conexion()
-    categoria = None
-    with conexion.cursor() as cursor:
-        cursor.execute(
-            "SELECT * FROM categoria WHERE nombre = %s", (name,))
-        categoria = cursor.fetchone()
-    conexion.close()
-    return categoria

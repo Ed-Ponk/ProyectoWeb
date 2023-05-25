@@ -38,11 +38,11 @@ def obtener_producto_por_id(id):
     conexion.close()
     return producto
 
-def actualizar_categoria(nombre, descripcion, precio, stock, modelo, marca_id, categoria_id, id_producto):
+def actualizar_producto(nombre, descripcion, precio, stock, modelo, marca_id, categoria_id, vigencia, id_producto):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
-        cursor.execute("UPDATE categoria SET nombre = %s, descripcion = %s, precio= %s, stock= %s, modelo=%s, marca_id= %s, categoria= %s, vigencia = %s WHERE id_producto = %s",
-                       (nombre, descripcion, precio, stock, modelo, marca_id, categoria_id, id_producto))
+        cursor.execute("UPDATE producto SET nombre = %s, descripcion = %s, precio= %s, stock= %s, modelo=%s, marca_id= %s, categoria= %s, vigencia = %s WHERE id_producto = %s",
+                       (nombre, descripcion, precio, stock, modelo, marca_id, categoria_id, vigencia, id_producto))
     conexion.commit()
     conexion.close()
 

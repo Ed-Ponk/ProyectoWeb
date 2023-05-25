@@ -1,39 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     background: #EAEBEF;
     font-family: 'Poppins', sans-serif;
     display: flex;
 }
 
-.nav{
+.nav {
     width: 300px;
 }
 
-.nav__link{
+.nav__link {
     color: #303440;
     display: block;
     padding: 15px 0;
     text-decoration: none;
 }
 
-.nav__link--inside{
-    border-radius: 6px ;
+.nav__link--inside {
+    border-radius: 6px;
     padding-left: 20px;
     text-align: left;
 }
 
-.nav__link--inside:hover{
+.nav__link--inside:hover {
     background: #F6F8FA;
 }
 
-.list{
+.list {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -43,18 +43,18 @@ body{
     background: #fff;
 }
 
-.list__item{
+.list__item {
     list-style: none;
     width: 100%;
     text-align: center;
     overflow: hidden;
 }
 
-.list__item--click{
+.list__item--click {
     cursor: pointer;
 }
 
-.list__button{
+.list__button {
     display: flex;
     align-items: center;
     gap: 1em;
@@ -62,16 +62,16 @@ body{
     margin: 0 auto;
 }
 
-.arrow .list__arrow{
+.arrow .list__arrow {
     transform: rotate(90deg);
 }
 
-.list__arrow{
+.list__arrow {
     margin-left: auto;
     transition: transform .3s;
 }
 
-.list__show{
+.list__show {
     width: 80%;
     margin-left: auto;
     border-left: 2px solid #303440;
@@ -82,7 +82,74 @@ body{
 
 
 /*style venta*/
-.container{
-  width: 100%;
-  background: orange;
+
+.section {
+    width: 100%;
+    background: #EAEBEF;
 }
+
+.columns {
+    margin-top: 4%;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.is-size-3{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.button{
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center;
+    border-radius: 3px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+
+}
+
+.button.is-success{
+    background-color: #4ac675;
+    width: 6rem;
+    height: 40px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.button.is-info{
+    background-color: #3198db;
+    width: 6rem;
+    height: 40px;
+    color: white;
+}
+
+.button.is-danger{
+    background-color: #f04668;
+    font-size: 16px;
+    width: 6rem;
+    height: 40px;
+    color: white;
+}
+
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .table th {
+    background-color: #f5f5f5;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }

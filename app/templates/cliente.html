@@ -1,0 +1,48 @@
+{% extends "maestra.html" %}
+{% block titulo %} Clientes {% endblock %}
+{% block contenido %}
+
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Clientes</h3>
+            <a href="{{url_for('formulario_agregar_cliente')}}" class="button is-success">Agregar</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Apellido</th>
+                        <th>DNI</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Vigencia</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                    <tr>
+                        <td>{{cliente[1]}}</td>
+                        <td>{{cliente[2]}}</td>
+                        <td>{{cliente[3]}}</td>
+                        <td>{{cliente[4]}}</td>
+                        <td>{{cliente[5]}}</td>
+                        <td>{{cliente[6]}}</td>
+                        <td>
+                            <a href="{{url_for('editar_cliente', id=cliente[0])}}" class="button is-info">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('eliminar_cliente')}}" method="POST">
+                                <input type="hidden" name="id" value="{{cliente[0]}}">
+                                <button class="button is-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
