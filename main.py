@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, redirect, flash, jsonify
-import controlador_cliente
+import controlador_cliente, controlador_categoria, controlador_detalle_venta, controlador_marca, controlador_metodo_pago, controlador_producto, controlador_venta
 
 app = Flask(__name__)
+
+
+"""
 
 @app.route("/agregar_cliente")
 def formulario_agregar_cliente():
@@ -16,15 +19,17 @@ def guardar_disco():
     controlador_cliente.insertar_cliente(nombres, contraseña, email)
     # De cualquier modo, y si todo fue bien, redireccionar
     return redirect("/clientes")
+"""
 
 
 @app.route("/")
-@app.route("/discos")
-def discos():
-    discos = controlador_cliente.obtener_discos()
-    return render_template("discos.html", discos=discos)
+@app.route("/clientes")
+def clientes():
+    clientes = controlador_cliente.obtener_cliente()
+    return render_template("clientes.html", clientes=clientes)
 
 
+"""
 @app.route("/eliminar_disco", methods=["POST"])
 def eliminar_disco():
     controlador_cliente.eliminar_disco(request.form["id"])
@@ -48,6 +53,8 @@ def actualizar_disco():
     genero = request.form["genero"]
     controlador_cliente.actualizar_disco(codigo, nombre, artista, precio, genero, id)
     return redirect("/discos")
+
+"""
 
 
 # Iniciar el servidor

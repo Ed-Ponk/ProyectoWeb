@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menú despegable</title>
+  <title>El Tintero | Útiles escolares</title>
   <link rel="stylesheet" href="/app/static/styles/maestra.css">
 </head>
 
@@ -30,11 +30,11 @@
 
         <ul class="list__show">
           <li class="list__inside">
-            <a href="#" class="nav__link nav__link--inside">Estoy dentro</a>
+            <a href="#" class="nav__link nav__link--inside">Ventas HOY</a>
           </li>
 
           <li class="list__inside">
-            <a href="#" class="nav__link nav__link--inside">Estoy dentro</a>
+            <a href="#" class="nav__link nav__link--inside">Registrar venta</a>
           </li>
         </ul>
 
@@ -44,7 +44,7 @@
       <li class="list__item">
         <div class="list__button">
           <img src="/app/assets/user.svg" class="list__img">
-          <a href="#" class="nav__link">Clientes</a>
+          <a href="{{url_for('clientes')}}" class="nav__link">Clientes</a>
         </div>
       </li>
 
@@ -57,15 +57,15 @@
 
         <ul class="list__show">
           <li class="list__inside">
-            <a href="#" class="nav__link nav__link--inside">Estoy dentro</a>
+            <a href="#" class="nav__link nav__link--inside">Productos</a>
           </li>
 
           <li class="list__inside">
-            <a href="#" class="nav__link nav__link--inside">Estoy dentro</a>
+            <a href="#" class="nav__link nav__link--inside">Marca</a>
           </li>
 
           <li class="list__inside">
-            <a href="#" class="nav__link nav__link--inside">Estoy dentro</a>
+            <a href="#" class="nav__link nav__link--inside">Categoría</a>
           </li>
         </ul>
 
@@ -89,40 +89,77 @@
     </ul>
   </nav>
 
- 
+  <!--
+
+    <section class="section">
+      <div class="columns">
+          <div class="column">
+              <h3 class="is-size-3">Clientes</h3>
+              <a href="{{url_for('formulario_agregar_cliente')}}" class="button is-success">Agregar</a>
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>Nombres</th>
+                          <th>Apellido</th>
+                          <th>DNI</th>
+                          <th>Email</th>
+                          <th>Teléfono</th>
+                          <th>Vigencia</th>
+                          <th>Editar</th>
+                          <th>Eliminar</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for cliente in clientes %}
+                      <tr>
+                          <td>{{cliente[1]}}</td>
+                          <td>{{cliente[2]}}</td>
+                          <td>{{cliente[3]}}</td>
+                          <td>{{cliente[4]}}</td>
+                          <td>{{cliente[5]}}</td>
+                          <td>{{cliente[6]}}</td>
+                          <td>
+                              <a href="{{url_for('editar_cliente', id=cliente[0])}}" class="button is-info">Editar</a>
+                          </td>
+                          <td>
+                              <form action="{{url_for('eliminar_cliente')}}" method="POST">
+                                  <input type="hidden" name="id" value="{{cliente[0]}}">
+                                  <button class="button is-danger">Eliminar</button>
+                              </form>
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </section>
+  
   <section class="section">
     <div class="columns">
         <div class="column">
-            <h3 class="is-size-3">Clientes</h3>
-            <a href="{{url_for('formulario_agregar_cliente')}}" class="button is-success">Agregar</a>
+            <h3 class="is-size-3">Categorías</h3>
+            <a href="{{url_for('formulario_agregar_categoria')}}" class="button is-success">Agregar</a>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Nombres</th>
-                        <th>Apellido</th>
-                        <th>DNI</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
+                        <th>Nombre</th>
                         <th>Vigencia</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for cliente in clientes %}
+                    {% for categoria in categorias %}
                     <tr>
-                        <td>{{cliente[1]}}</td>
-                        <td>{{cliente[2]}}</td>
-                        <td>{{cliente[3]}}</td>
-                        <td>{{cliente[4]}}</td>
-                        <td>{{cliente[5]}}</td>
-                        <td>{{cliente[6]}}</td>
+                        <td>{{categoria[1]}}</td>
+                        <td>{{categoria[2]}}</td>
                         <td>
-                            <a href="{{url_for('editar_cliente', id=cliente[0])}}" class="button is-info">Editar</a>
+                            <a href="{{url_for('editar_categoria', id=categoria[0])}}" class="button is-info">Editar</a>
                         </td>
                         <td>
-                            <form action="{{url_for('eliminar_cliente')}}" method="POST">
-                                <input type="hidden" name="id" value="{{cliente[0]}}">
+                            <form action="{{url_for('eliminar_categoria')}}" method="POST">
+                                <input type="hidden" name="id" value="{{categoria[0]}}">
                                 <button class="button is-danger">Eliminar</button>
                             </form>
                         </td>
@@ -134,9 +171,176 @@
     </div>
 </section>
 
+<section class="section">
+  <div class="columns">
+      <div class="column">
+          <h3 class="is-size-3">Marcas</h3>
+          <a href="{{url_for('formulario_agregar_marca')}}" class="button is-success">Agregar</a>
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>Nombre</th>
+                      <th>Vigencia</th>
+                      <th>Editar</th>
+                      <th>Eliminar</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for marca in marcas %}
+                  <tr>
+                      <td>{{marca[1]}}</td>
+                      <td>{{marca[2]}}</td>
+                      <td>
+                          <a href="{{url_for('editar_marca', id=marca[0])}}" class="button is-info">Editar</a>
+                      </td>
+                      <td>
+                          <form action="{{url_for('eliminar_marca')}}" method="POST">
+                              <input type="hidden" name="id" value="{{marca[0]}}">
+                              <button class="button is-danger">Eliminar</button>
+                          </form>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</section>
 
 
-  <script src="/app/static/js/maestra.js"></script>
+<section class="section">
+  <div class="columns">
+      <div class="column">
+          <h3 class="is-size-3">Métodos de Pago</h3>
+          <a href="{{url_for('formulario_agregar_metodo_pago')}}" class="button is-success">Agregar</a>
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>Nombre</th>
+                      <th>Vigencia</th>
+                      <th>Editar</th>
+                      <th>Eliminar</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for metodo_pago in metodos_pago %}
+                  <tr>
+                      <td>{{metodo_pago[1]}}</td>
+                      <td>{{metodo_pago[2]}}</td>
+                      <td>
+                          <a href="{{url_for('editar_metodo_pago', id=metodo_pago[0])}}" class="button is-info">Editar</a>
+                      </td>
+                      <td>
+                          <form action="{{url_for('eliminar_metodo_pago')}}" method="POST">
+                              <input type="hidden" name="id" value="{{metodo_pago[0]}}">
+                              <button class="button is-danger">Eliminar</button>
+                          </form>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="columns">
+      <div class="column">
+          <h3 class="is-size-3">Productos</h3>
+          <a href="{{url_for('formulario_agregar_producto')}}" class="button is-success">Agregar</a>
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>Código</th>
+                      <th>Nombre</th>
+                      <th>Descripción</th>
+                      <th>Precio</th>
+                      <th>Stock</th>
+                      <th>Modelo</th>
+                      <th>Marca</th>
+                      <th>Categoría</th>
+                      <th>Vigencia</th>
+                      <th>Editar</th>
+                      <th>Eliminar</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for producto in productos %}
+                  <tr>
+                      <td>{{producto[0]}}</td>
+                      <td>{{producto[1]}}</td>
+                      <td>{{producto[2]}}</td>
+                      <td>{{producto[3]}}</td>
+                      <td>{{producto[4]}}</td>
+                      <td>{{producto[5]}}</td>
+                      <td>{{producto[6]}}</td>
+                      <td>{{producto[7]}}</td>
+                      <td>{{producto[8]}}</td>
+                      <td>
+                          <a href="{{url_for('editar_producto', id=producto[0])}}" class="button is-info">Editar</a>
+                      </td>
+                      <td>
+                          <form action="{{url_for('eliminar_producto')}}" method="POST">
+                              <input type="hidden" name="id" value="{{producto[0]}}">
+                              <button class="button is-danger">Eliminar</button>
+                          </form>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="columns">
+      <div class="column">
+          <h3 class="is-size-3">Ventas</h3>
+          <a href="{{url_for('formulario_agregar_venta')}}" class="button is-success">Agregar</a>
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>Código</th>
+                      <th>Cliente</th>
+                      <th>Método de Pago</th>
+                      <th>Empleado</th>
+                      <th>Fecha</th>
+                      <th>Total</th>
+                      <th>Editar</th>
+                      <th>Eliminar</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for venta in ventas %}
+                  <tr>
+                      <td>{{venta[0]}}</td>
+                      <td>{{venta[1]}}</td>
+                      <td>{{venta[2]}}</td>
+                      <td>{{venta[3]}}</td>
+                      <td>{{venta[4]}}</td>
+                      <td>{{venta[5]}}</td>
+                      <td>
+                          <a href="{{url_for('editar_venta', id=venta[0])}}" class="button is-info">Editar</a>
+                      </td>
+                      <td>
+                          <form action="{{url_for('eliminar_venta')}}" method="POST">
+                              <input type="hidden" name="id" value="{{venta[0]}}">
+                              <button class="button is-danger">Eliminar</button>
+                          </form>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</section>
+-->
+
+<script src="/app/static/js/maestra.js"></script>
 </body>
 
 </html>

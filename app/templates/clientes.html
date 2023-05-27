@@ -10,6 +10,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Código</th>
                         <th>Nombres</th>
                         <th>Apellido</th>
                         <th>DNI</th>
@@ -23,6 +24,7 @@
                 <tbody>
                     {% for cliente in clientes %}
                     <tr>
+                        <td>{{cliente[0]}}</td>
                         <td>{{cliente[1]}}</td>
                         <td>{{cliente[2]}}</td>
                         <td>{{cliente[3]}}</td>

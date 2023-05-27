@@ -1,0 +1,48 @@
+{% extends "maestra.html" %}
+{% block titulo %} Ventas {% endblock %}
+{% block contenido %}
+
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Ventas</h3>
+            <a href="{{url_for('formulario_agregar_venta')}}" class="button is-success">Agregar</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Cliente</th>
+                        <th>Método de Pago</th>
+                        <th>Empleado</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venta in ventas %}
+                    <tr>
+                        <td>{{venta[0]}}</td>
+                        <td>{{venta[1]}}</td>
+                        <td>{{venta[2]}}</td>
+                        <td>{{venta[3]}}</td>
+                        <td>{{venta[4]}}</td>
+                        <td>{{venta[5]}}</td>
+                        <td>
+                            <a href="{{url_for('editar_venta', id=venta[0])}}" class="button is-info">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('eliminar_venta')}}" method="POST">
+                                <input type="hidden" name="id" value="{{venta[0]}}">
+                                <button class="button is-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
