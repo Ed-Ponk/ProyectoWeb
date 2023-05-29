@@ -6,7 +6,7 @@
     <div class="columns">
         <div class="column">
             <h3 class="is-size-3">Marcas</h3>
-            <a href="{{url_for('formulario_agregar_marca')}}" class="button is-success">Agregar</a>
+            <a href="" class="button is-success" id="showModalAdd">Agregar</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -39,4 +39,22 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block agregar %}
+<div class="columns--add" id="agregar">
+    <div class="column is-one-third">
+        <h3 class="is-size-3">Agregar marca</h3>
+        <form action="{{url_for('guardar_marca')}}" method="post" class="form__add">
+
+            <label for="nombre" class="item__add">Nombre:</label>
+            <input type="text" class="input" placeholder="Nombre" name="nombre" id="nombre" required>
+
+            <div class="container__save">
+                <button type="submit" class="button is-success mt-2">Guardar</button>
+                <a href="" class="button is-primary mt-2" id="closeModalAdd">Cerrar</a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

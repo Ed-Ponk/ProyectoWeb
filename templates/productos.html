@@ -1,0 +1,100 @@
+{% extends "maestra.html" %}
+{% block titulo %} Productos {% endblock %}
+{% block contenido %}
+
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Productos</h3>
+            <a href="" class="button is-success" id="showModalAdd">Agregar</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Modelo</th>
+                        <th>Marca</th>
+                        <th>Categoría</th>
+                        <th>Vigencia</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>{{producto[0]}}</td>
+                        <td>{{producto[1]}}</td>
+                        <td>{{producto[2]}}</td>
+                        <td>{{producto[3]}}</td>
+                        <td>{{producto[4]}}</td>
+                        <td>{{producto[5]}}</td>
+                        <td>{{producto[6]}}</td>
+                        <td>{{producto[7]}}</td>
+                        <td>{{producto[8]}}</td>
+                        <td>
+                            <a href="{{url_for('editar_producto', id=producto[0])}}" class="button is-info">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('eliminar_producto')}}" method="POST">
+                                <input type="hidden" name="id" value="{{producto[0]}}">
+                                <button class="button is-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block agregar %}
+<div class="columns--add" id="agregar">
+    <div class="column is-one-third">
+        <h3 class="is-size-3">Agregar producto</h3>
+        <form action="{{url_for('guardar_producto')}}" method="post" class="form__add">
+
+            <label for="nombre" class="item__add">Nombre:</label>
+            <input type="text" class="input" placeholder="Nombre" name="nombre" id="nombre" required>
+
+            <label for="descripcion" class="item__add">Descripción:</label>
+            <textarea class="input" placeholder="Descripción" name="descripcion" id="descripcion" required></textarea>
+
+            <label for="precio" class="item__add">Precio:</label>
+            <input type="number" class="input" placeholder="Precio" name="precio" id="precio" required>
+
+            <label for="stock" class="item__add">Stock:</label>
+            <input type="number" class="input" placeholder="Stock" name="stock" id="stock" required>
+
+            <label for="modelo" class="item__add">Modelo:</label>
+            <input type="text" class="input" placeholder="Modelo" name="modelo" id="modelo" required>
+
+            <label for="marca" class="item__add">Marca:</label>
+            <select class="select" name="marca" id="marca">
+                <option value="marca1">Marca 1</option>
+                <option value="marca2">Marca 2</option>
+                <option value="marca3">Marca 3</option>
+                <!-- Agrega aquí más opciones las marcas -->
+            </select>
+
+            <label for="categoria" class="item__add">Categoría:</label>
+            <select class="select" name="categoria" id="categoria">
+                <option value="categoria1">Categoría 1</option>
+                <option value="categoria2">Categoría 2</option>
+                <option value="categoria3">Categoría 3</option>
+                <!-- Agrega aquí más opciones las categorías -->
+            </select>
+
+            <div class="container__save">
+                <button type="submit" class="button is-success mt-2">Guardar</button>
+                <a href="" class="button is-primary mt-2" id="closeModalAdd">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

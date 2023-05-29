@@ -6,7 +6,7 @@
     <div class="columns">
         <div class="column">
             <h3 class="is-size-3">Clientes</h3>
-            <a href="{{url_for('formulario_agregar_cliente')}}" class="button is-success">Agregar</a>
+            <a href="" class="button is-success" id="showModalAdd">Agregar</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -47,4 +47,34 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block agregar %}
+<div class="columns--add" id="agregar">
+    <div class="column is-one-third">
+        <h3 class="is-size-3">Agregar cliente</h3>
+        <form action="{{url_for('guardar_cliente')}}" method="post" class="form__add">
+
+            <label for="nombres" class="item__add">Nombres:</label>
+            <input type="text" class="input" placeholder="Nombres" name="nombres" id="nombres" required>
+
+            <label for="apellido" class="item__add">Apellido:</label>
+            <input type="text" class="input" placeholder="Apellido" name="apellido" id="apellido" required>
+
+            <label for="dni" class="item__add">DNI:</label>
+            <input type="text" class="input" placeholder="DNI" name="dni" id="dni" required>
+
+            <label for="email" class="item__add">Email:</label>
+            <input type="email" class="input" placeholder="Email" name="email" id="email">
+
+            <label for="telefono" class="item__add">Teléfono:</label>
+            <input type="text" class="input" placeholder="Teléfono" name="telefono" id="telefono">
+
+            <div class="container__save">
+                <button type="submit" class="button is-success mt-2">Guardar</button>
+                <a href="" class="button is-primary mt-2" id="closeModalAdd">Cerrar</a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

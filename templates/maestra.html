@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Tintero | Útiles escolares</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/maestra.css') }}">
+</head>
+
+<body>
+
+  <nav class="nav">
+    <ul class="list">
+
+      <li class="list__item">
+        <div class="list__button">
+          <img src="{{ url_for('static', filename='assets/dashboard.svg') }}" class="list__img">
+          <a href="#" class="nav__link">Inicio</a>
+        </div>
+      </li>
+
+      <li class="list__item list__item--click">
+        <div class="list__button list__button--click">
+          <img src="{{ url_for('static', filename='assets/cart.svg') }}" class="list__img">
+          <a href="#" class="nav__link">Ventas</a>
+          <img src="{{ url_for('static', filename='assets/arrow.svg') }}" class="list__arrow">
+        </div>
+
+        <ul class="list__show">
+          <li class="list__inside">
+            <a href="#" class="nav__link nav__link--inside">Ventas HOY</a>
+          </li>
+
+          <li class="list__inside">
+            <a href="#" class="nav__link nav__link--inside">Registrar venta</a>
+          </li>
+        </ul>
+
+      </li>
+
+
+      <li class="list__item">
+        <div class="list__button">
+          <img src="{{ url_for('static', filename='assets/user.svg') }}" class="list__img">
+          <a href="{{url_for('clientes')}}" class="nav__link">Clientes</a>
+        </div>
+      </li>
+
+      <li class="list__item list__item--click">
+        <div class="list__button list__button--click">
+          <img src="{{ url_for('static', filename='assets/products.svg') }}" class="list__img">
+          <a href="#" class="nav__link">Productos</a>
+          <img src="{{ url_for('static', filename='assets/arrow.svg') }}" class="list__arrow">
+        </div>
+
+        <ul class="list__show">
+          <li class="list__inside">
+            <a href="{{url_for('productos')}}" class="nav__link nav__link--inside">Productos</a>
+          </li>
+
+          <li class="list__inside">
+            <a href="{{url_for('marcas')}}" class="nav__link nav__link--inside">Marca</a>
+          </li>
+
+          <li class="list__inside">
+            <a href="{{url_for('categorias')}}" class="nav__link nav__link--inside">Categoría</a>
+          </li>
+        </ul>
+
+      </li>
+
+      <li class="list__item">
+        <div class="list__button">
+
+          <img src="{{ url_for('static', filename='assets/worker.svg') }}" class="list__img">
+          <a href="#" class="nav__link">Provedores</a>
+        </div>
+      </li>
+
+
+      <li class="list__item">
+        <div class="list__button">
+          <img src="{{ url_for('static', filename='assets/message.svg') }}" class="list__img">
+          <a href="#" class="nav__link">Contacto</a>
+        </div>
+      </li>
+
+    </ul>
+  </nav>
+
+  {%block contenido %} {% endblock %}
+  {% block agregar %} {% endblock %}
+<script src="{{ url_for('static', filename='js/maestra.js') }}"></script>
+</body>
+
+</html>
