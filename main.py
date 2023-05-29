@@ -166,6 +166,52 @@ def actualizar_categoria():
     controlador_categoria.actualizar_categoria(nombre, vigencia, id)
     return redirect("/categorias")
 
+#VENTA
+@app.route("/ventas")
+def ventas():
+    ventas = controlador_venta.obtener_venta()
+    return render_template("ventas.html", ventas=ventas)
+
+
+@app.route("/agregar_venta")
+def formulario_agregar_venta():
+    return render_template("agregar_venta.html")
+
+
+@app.route("/guardar_venta", methods=["POST"])
+def guardar_venta():
+    cliente = request.form["cliente"]
+    metodo_pago = request.form["metodo_pago"]
+    empleado = request.form["empleado"]
+    fecha = request.form["fecha"]
+    total = request.form["total"]
+    controlador_venta.insertar_venta(cliente, metodo_pago, empleado, fecha, total)
+    return redirect("/ventas")
+
+
+@app.route("/eliminar_venta", methods=["POST"])
+def eliminar_venta():
+    controlador_venta.eliminar_venta(request.form["id"])
+    return redirect("/ventas")
+
+
+@app.route("/formulario_editar_venta/<int:id>")
+def editar_venta(id):
+    # Obtener la venta por ID
+    venta = controlador_venta.obtener_venta_por_id(id)
+    return render_template("editar_venta.html", venta=venta)
+
+
+@app.route("/actualizar_venta", methods=["POST"])
+def actualizar_venta():
+    id = request.form["id"]
+    cliente = request.form["cliente"]
+    metodo_pago = request.form["metodo_pago"]
+    empleado = request.form["empleado"]
+    fecha = request.form["fecha"]
+    total = request.form["total"]
+    controlador_venta.actualizar_ventaa(cliente, metodo_pago, empleado, fecha, total, id)
+    return redirect("/ventas")
 
 # Iniciar el servidor
 if __name__ == "__main__":

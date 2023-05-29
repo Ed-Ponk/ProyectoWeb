@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Tintero | Útiles escolares</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/maestra.css') }}">
+  {%block cssAddSale %} {% endblock %}
 </head>
 
 <body>
@@ -30,11 +31,11 @@
 
         <ul class="list__show">
           <li class="list__inside">
-            <a href="#" class="nav__link nav__link--inside">Ventas HOY</a>
+            <a href="{{url_for('ventas')}}" class="nav__link nav__link--inside">Ventas HOY</a>
           </li>
 
           <li class="list__inside">
-            <a href="#" class="nav__link nav__link--inside">Registrar venta</a>
+            <a href="{{url_for('formulario_agregar_venta')}}" class="nav__link nav__link--inside">Registrar venta</a>
           </li>
         </ul>
 
@@ -92,7 +93,8 @@
 
   {%block contenido %} {% endblock %}
   {% block agregar %} {% endblock %}
-<script src="{{ url_for('static', filename='js/maestra.js') }}"></script>
+  {% block agregar %} {% endblock %}
+  <script src="{{ url_for('static', filename='js/maestra.js') }}"></script>
 </body>
 
 </html>
