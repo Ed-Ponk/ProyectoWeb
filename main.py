@@ -3,13 +3,35 @@ import controlador_cliente, controlador_categoria, controlador_detalle_venta, co
 
 app = Flask(__name__)
 
+@app.route("/clientes/<int:id>", methods=["GET"])
+def obtener_cliente(id):
+    cliente = controlador_cliente.obtener_cliente_por_id(id)
+    if cliente:
+        return jsonify(cliente)
+    else:
+        return jsonify({"mensaje": "Cliente no encontrado"}), 404
+
+@app.route("/categorias/<int:id>", methods=["GET"])
+def obtener_categoria(id):
+    categoria = controlador_categoria.obtener_categoria_por_id(id)
+    if categoria:
+        return jsonify(categoria)
+    else:
+        return jsonify({"mensaje": "Categoria no encontrado"}), 404
+
+@app.route("/marcas/<int:id>", methods=["GET"])
+def obtener_marca(id):
+    marca = controlador_marca.obtener_marca_por_id(id)
+    if marca:
+        return jsonify(marca)
+    else:
+        return jsonify({"mensaje": "Marca no encontrado"}), 404
 
 @app.route("/")
 @app.route("/clientes")
 def clientes():
     clientes = controlador_cliente.obtener_cliente()
     return render_template("clientes.html", clientes=clientes)
-
 
 
 @app.route("/guardar_cliente", methods=["POST"])

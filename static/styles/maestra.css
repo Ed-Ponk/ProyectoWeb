@@ -101,6 +101,13 @@ body {
     margin-right: 4%;
 }
 
+.column {
+    max-height: 800px;
+    /* Establece la altura máxima de la página */
+    overflow-y: auto;
+    /* Habilita la barra de desplazamiento vertical si el contenido excede la altura máxima */
+}
+
 .is-size-3 {
     font-size: 30px;
     margin-bottom: 20px;
@@ -235,6 +242,28 @@ input[type="number"]::-webkit-outer-spin-button {
     gap: 2rem;
 }
 
+/*Edit*/
+.columns--edit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #111111bd;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .6s;
+    width: 100vw;
+}
+
+.columns--edit.edit--show {
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity .6s;
+}
 
 .select {
     outline-style: none;

@@ -4,9 +4,10 @@
 
 <section class="section">
     <div class="columns">
+        <h3 class="is-size-3">Clientes</h3>
+        <a href="" class="button is-success" id="showModalAdd">Agregar</a>
         <div class="column">
-            <h3 class="is-size-3">Clientes</h3>
-            <a href="" class="button is-success" id="showModalAdd">Agregar</a>
+
             <table class="table">
                 <thead>
                     <tr>
@@ -32,7 +33,7 @@
                         <td>{{cliente[5]}}</td>
                         <td>{{cliente[6]}}</td>
                         <td>
-                            <a href="{{url_for('editar_cliente', id=cliente[0])}}" class="button is-info">Editar</a>
+                            <a href="" class="button is-info showModalEditCliente" data-codigo="{{cliente[0]}}">Editar</a>
                         </td>
                         <td>
                             <form action="{{url_for('eliminar_cliente')}}" method="POST">
@@ -79,27 +80,35 @@
 </div>
 {% endblock %}
 
-
 {% block edit %}
-<div class="columns">
-    <div class="column">
+<div class="columns--edit edit">
+    <div class="column is-one-third">
         <h3 class="is-size-3">Editar cliente</h3>
-        <form action="{{url_for('actualizar_cliente')}}" method="post">
-            {# Enviar el id en un campo oculto #}
-            <input type="hidden" name="id" value="{{cliente[0]}}">
-            <label for="nombres">Nombres:</label>
-            <input value="{{cliente[1]}}" required type="text" class="input" placeholder="Nombres" name="nombres" id="nombres">
-            <label for="apellido">Apellido:</label>
-            <input value="{{cliente[2]}}" required type="text" class="input" placeholder="Apellido" name="apellido" id="apellido">
-            <label for="dni">DNI:</label>
-            <input value="{{cliente[3]}}" required type="text" class="input" placeholder="DNI" name="dni" id="dni">
-            <label for="email">Email:</label>
-            <input value="{{cliente[4]}}" required type="email" class="input" placeholder="Email" name="email" id="email">
-            <label for="telefono">Teléfono:</label>
-            <input value="{{cliente[5]}}" required type="text" class="input" placeholder="Teléfono" name="telefono" id="telefono">
-            <button type="submit" class="button is-success mt-2">Guardar</button>
-            <a href="{{url_for('clientes')}}" class="button is-primary mt-2">Volver</a>
+
+        <form action="{{url_for('actualizar_cliente')}}" method="post" class="form__add">
+
+            <label for="codigo" class="item__add">Código:</label>
+            <input value="" required type="text" class="input input-id" name="id" readonly>
+            <label for="nombres" class="item__add">Nombres:</label>
+            <input value="" required type="text" class="input input-nombres" placeholder="Nombres" name="nombres" id="nombres">
+            <label for="apellido" class="item__add">Apellido:</label>
+            <input value="" required type="text" class="input input-apellido" placeholder="Apellido" name="apellido" id="apellido">
+            <label for="dni" class="item__add">DNI:</label>
+            <input value="" required type="text" class="input input-dni" placeholder="DNI" name="dni" id="dni">
+            <label for="email" class="item__add">Email:</label>
+            <input value="" required type="email" class="input input-email" placeholder="Email" name="email" id="email">
+            <label for="telefono" class="item__add">Teléfono:</label>
+            <input value="" required type="text" class="input input-telefono" placeholder="Teléfono" name="telefono" id="telefono">
+            <label for="vigencia" class="item__add">Vigencia:</label>
+            <input value="" required type="text" class="input input-vigencia" placeholder="Vigencia" name="vigencia" id="vigencia">
+
+
+            <div class="container__save">
+                <button type="submit" class="button is-success mt-2">Guardar</button>
+                <a href="{{url_for('clientes')}}" class="button is-primary mt-2 closeModalEdit" >Volver</a>
         </form>
     </div>
 </div>
 {% endblock %}
+
+
