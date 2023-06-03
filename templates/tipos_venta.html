@@ -1,13 +1,14 @@
 {% extends "maestra.html" %}
-{% block titulo %} Categorías {% endblock %}
-{% block jsedit %}<script src="{{ url_for('static', filename='js/categoria.js') }}"></script>{% endblock %}
+{% block titulo %} Tipos de Venta {% endblock %}
+{% block jsedit %}
+<script src="{{ url_for('static', filename='js/tipo_venta.js') }}"></script>
+{% endblock %}
 
 {% block contenido %}
-
 <section class="section">
     <div class="columns">
         <div class="column">
-            <h3 class="is-size-3">Categorías</h3>
+            <h3 class="is-size-3">Tipos de Venta</h3>
             <a href="" class="button is-success" id="showModalAdd">Agregar</a>
             <table class="table">
                 <thead>
@@ -20,17 +21,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for categoria in categorias %}
+                    {% for tipo_venta in tipos_venta %}
                     <tr>
-                        <td>{{categoria[0]}}</td>
-                        <td>{{categoria[1]}}</td>
-                        <td>{{categoria[2]}}</td>
+                        <td>{{ tipo_venta[0] }}</td>
+                        <td>{{ tipo_venta[1] }}</td>
+                        <td>{{ tipo_venta[2] }}</td>
                         <td>
-                            <a href="" class="button is-info showModalEditCategoria" data-codigo="{{categoria[0]}}">Editar</a>
+                            <a href="" class="button is-info showModalEditTipoVenta"
+                                data-codigo="{{ tipo_venta[0] }}">Editar</a>
                         </td>
                         <td>
-                            <form action="{{url_for('eliminar_categoria')}}" method="POST">
-                                <input type="hidden" name="id" value="{{categoria[0]}}">
+                            <form action="{{ url_for('eliminar_tipo_venta') }}" method="POST">
+                                <input type="hidden" name="id" value="{{ tipo_venta[0] }}">
                                 <button class="button is-danger">Eliminar</button>
                             </form>
                         </td>
@@ -46,12 +48,10 @@
 {% block agregar %}
 <div class="columns--add" id="agregar">
     <div class="column is-one-third">
-        <h3 class="is-size-3">Agregar categoría</h3>
-        <form action="{{url_for('guardar_categoria')}}" method="post" class="form__add">
-
+        <h3 class="is-size-3">Agregar tipo de venta</h3>
+        <form action="{{ url_for('guardar_tipo_venta') }}" method="post" class="form__add">
             <label for="nombre" class="item__add">Nombre:</label>
             <input type="text" class="input" placeholder="Nombre" name="nombre" id="nombre" required>
-
             <div class="container__save">
                 <button type="submit" class="button is-success mt-2">Guardar</button>
                 <a href="" class="button is-primary mt-2" id="closeModalAdd">Cerrar</a>
@@ -64,24 +64,24 @@
 {% block edit %}
 <div class="columns--edit edit">
     <div class="column is-one-third">
-        <h3 class="is-size-3">Editar categoría</h3>
+        <h3 class="is-size-3">Editar tipo de venta</h3>
 
-        <form action="{{ url_for('actualizar_categoria') }}" method="post" class="form__add">
+        <form action="{{ url_for('actualizar_tipo_venta') }}" method="post" class="form__add">
 
-            
             <label for="codigo" class="item__add">Código:</label>
             <input value="" required type="text" class="input input-id" name="id" readonly>
-            
+
             <label for="nombre" class="item__add">Nombre:</label>
-            <input value="" required type="text" class="input input-nombre" placeholder="Nombre" name="nombre" id="nombre">
-            
+            <input value="" required type="text" class="input input-nombre" placeholder="Nombre" name="nombre"
+                id="nombre">
+
             <label for="vigencia" class="item__add">Vigencia:</label>
             <input type="checkbox" id="vigenciaCheckbox" class="chkVigencia" name="vigencia" value="">
-            <label for="miCheckbox">(Vigente)</label>
-            
+            <label for="vigenciaCheckbox">(Vigente)</label>
+
             <div class="container__save">
                 <button type="submit" class="button is-success mt-2">Guardar</button>
-                <a href="{{ url_for('categorias') }}" class="button is-primary mt-2 closeModalEdit">Volver</a>
+                <a href="{{ url_for('tipos_venta') }}" class="button is-primary mt-2 closeModalEdit">Volver</a>
             </div>
         </form>
     </div>

@@ -14,6 +14,15 @@ def obtener_marca():
     conexion = obtener_conexion()
     marcas = []
     with conexion.cursor() as cursor:
+        cursor.execute("SELECT id_marca, nombre,  CASE WHEN vigencia THEN 'Vigente' ELSE 'No Vigente' END as vigencia FROM marca order by id_marca")
+        marcas = cursor.fetchall()
+    conexion.close()
+    return marcas
+
+def obtener_marca_vigente():
+    conexion = obtener_conexion()
+    marcas = []
+    with conexion.cursor() as cursor:
         cursor.execute("SELECT * FROM marca where vigencia=true")
         marcas = cursor.fetchall()
     conexion.close()
@@ -47,13 +56,3 @@ def actualizar_marca(nombre, vigencia, id_marca):
     conexion.close()
 
 
-#extra
-def obtener_marca_por_name(name):
-    conexion = obtener_conexion()
-    marca = None
-    with conexion.cursor() as cursor:
-        cursor.execute(
-            "SELECT * FROM marca WHERE nombre = %s", (name,))
-        marca = cursor.fetchone()
-    conexion.close()
-    return marca

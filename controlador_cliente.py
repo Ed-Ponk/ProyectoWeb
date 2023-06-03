@@ -14,7 +14,7 @@ def obtener_cliente():
     conexion = obtener_conexion()
     clientes = []
     with conexion.cursor() as cursor:
-        cursor.execute("SELECT * FROM cliente")
+        cursor.execute("SELECT id_cliente, nombres, apellido, dni, email, telefono, CASE WHEN vigencia THEN 'Vigente' ELSE 'No Vigente' END as vigencia FROM cliente ORDER by id_cliente")
         clientes = cursor.fetchall()
     conexion.close()
     return clientes

@@ -1,13 +1,15 @@
 {% extends "maestra.html" %}
-{% block titulo %} Categorías {% endblock %}
-{% block jsedit %}<script src="{{ url_for('static', filename='js/categoria.js') }}"></script>{% endblock %}
+{% block titulo %} Métodos de Pago {% endblock %}
+{% block jsedit %}
+<script src="{{ url_for('static', filename='js/metodo_pago.js') }}"></script>{% endblock %}
+
 
 {% block contenido %}
 
 <section class="section">
     <div class="columns">
         <div class="column">
-            <h3 class="is-size-3">Categorías</h3>
+            <h3 class="is-size-3">Métodos de Pago</h3>
             <a href="" class="button is-success" id="showModalAdd">Agregar</a>
             <table class="table">
                 <thead>
@@ -20,17 +22,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for categoria in categorias %}
+                    {% for metodo_pago in metodo_pagos %}
                     <tr>
-                        <td>{{categoria[0]}}</td>
-                        <td>{{categoria[1]}}</td>
-                        <td>{{categoria[2]}}</td>
+                        <td>{{metodo_pago[0]}}</td>
+                        <td>{{metodo_pago[1]}}</td>
+                        <td>{{metodo_pago[2]}}</td>
                         <td>
-                            <a href="" class="button is-info showModalEditCategoria" data-codigo="{{categoria[0]}}">Editar</a>
+                            <a href="" class="button is-info showModalEditMetodoPago"
+                                data-codigo="{{metodo_pago[0]}}">Editar</a>
                         </td>
                         <td>
-                            <form action="{{url_for('eliminar_categoria')}}" method="POST">
-                                <input type="hidden" name="id" value="{{categoria[0]}}">
+                            <form action="{{url_for('eliminar_metodo_pago')}}" method="POST">
+                                <input type="hidden" name="id" value="{{metodo_pago[0]}}">
                                 <button class="button is-danger">Eliminar</button>
                             </form>
                         </td>
@@ -46,8 +49,8 @@
 {% block agregar %}
 <div class="columns--add" id="agregar">
     <div class="column is-one-third">
-        <h3 class="is-size-3">Agregar categoría</h3>
-        <form action="{{url_for('guardar_categoria')}}" method="post" class="form__add">
+        <h3 class="is-size-3">Agregar método de pago</h3>
+        <form action="{{url_for('guardar_metodo_pago')}}" method="post" class="form__add">
 
             <label for="nombre" class="item__add">Nombre:</label>
             <input type="text" class="input" placeholder="Nombre" name="nombre" id="nombre" required>
@@ -61,27 +64,28 @@
 </div>
 {% endblock %}
 
+
 {% block edit %}
 <div class="columns--edit edit">
     <div class="column is-one-third">
-        <h3 class="is-size-3">Editar categoría</h3>
+        <h3 class="is-size-3">Editar método de pago</h3>
 
-        <form action="{{ url_for('actualizar_categoria') }}" method="post" class="form__add">
+        <form action="{{ url_for('actualizar_metodo_pago') }}" method="post" class="form__add">
 
-            
             <label for="codigo" class="item__add">Código:</label>
             <input value="" required type="text" class="input input-id" name="id" readonly>
-            
+
             <label for="nombre" class="item__add">Nombre:</label>
-            <input value="" required type="text" class="input input-nombre" placeholder="Nombre" name="nombre" id="nombre">
-            
+            <input value="" required type="text" class="input input-nombre" placeholder="Nombre" name="nombre"
+                id="nombre">
+
             <label for="vigencia" class="item__add">Vigencia:</label>
             <input type="checkbox" id="vigenciaCheckbox" class="chkVigencia" name="vigencia" value="">
-            <label for="miCheckbox">(Vigente)</label>
-            
+            <label for="vigenciaCheckbox">(Vigente)</label>
+
             <div class="container__save">
                 <button type="submit" class="button is-success mt-2">Guardar</button>
-                <a href="{{ url_for('categorias') }}" class="button is-primary mt-2 closeModalEdit">Volver</a>
+                <a href="{{ url_for('metodo_pagos') }}" class="button is-primary mt-2 closeModalEdit">Volver</a>
             </div>
         </form>
     </div>

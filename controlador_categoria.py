@@ -14,6 +14,15 @@ def obtener_categoria():
     conexion = obtener_conexion()
     categorias = []
     with conexion.cursor() as cursor:
+        cursor.execute("SELECT id_categoria, nombre,  CASE WHEN vigencia THEN 'Vigente' ELSE 'No Vigente' END as vigencia FROM categoria order by id_categoria")
+        categorias = cursor.fetchall()
+    conexion.close()
+    return categorias
+
+def obtener_categoria_vigente():
+    conexion = obtener_conexion()
+    categorias = []
+    with conexion.cursor() as cursor:
         cursor.execute("SELECT * FROM categoria where vigencia=true")
         categorias = cursor.fetchall()
     conexion.close()
@@ -47,13 +56,3 @@ def actualizar_categoria(nombre, vigencia, id_categoria):
     conexion.close()
 
 
-#extra
-def obtener_categoria_por_name(name):
-    conexion = obtener_conexion()
-    categoria = None
-    with conexion.cursor() as cursor:
-        cursor.execute(
-            "SELECT * FROM categoria WHERE nombre = %s", (name,))
-        categoria = cursor.fetchone()
-    conexion.close()
-    return categoria

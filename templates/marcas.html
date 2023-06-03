@@ -1,5 +1,7 @@
 {% extends "maestra.html" %}
 {% block titulo %} Marcas {% endblock %}
+{% block jsedit %}<script src="{{ url_for('static', filename='js/marca.js') }}"></script>{% endblock %}
+
 {% block contenido %}
 
 <section class="section">
@@ -73,7 +75,8 @@
             <input value="" required type="text" class="input input-nombre" placeholder="Nombre" name="nombre" id="nombre">
             
             <label for="vigencia" class="item__add">Vigencia:</label>
-            <input value="" required type="text" class="input input-vigencia" placeholder="Vigencia" name="vigencia" id="vigencia">
+            <input type="checkbox" id="vigenciaCheckbox" class="chkVigencia" name="vigencia" value="">
+            <label for="miCheckbox">(Vigente)</label>
 
             <div class="container__save">
                 <button type="submit" class="button is-success mt-2">Guardar</button>

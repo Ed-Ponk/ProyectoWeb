@@ -1,7 +1,65 @@
 from flask import Flask, render_template, request, redirect, flash, jsonify
-import controlador_cliente, controlador_categoria, controlador_detalle_venta, controlador_marca, controlador_metodo_pago, controlador_producto, controlador_venta
+import controlador_cliente, controlador_categoria, controlador_detalle_venta, controlador_marca, controlador_metodo_pago, controlador_producto, controlador_venta, controlador_tipo_venta
 
 app = Flask(__name__)
+
+
+@app.route("/productos_stock_precio/<int:id>", methods=["GET"])
+def obtener_stock_precio(id):
+    datos_producto = controlador_producto.obtener_stock_precio(id)
+    if datos_producto:
+        return jsonify(datos_producto)
+    else:
+        return jsonify({"mensaje": "Stock y cantidad del producto no encontrado"}), 404  
+
+@app.route("/productos_filtrados_categoria_marca/<int:id_categoria>/<int:id_marca>", methods=["GET"])
+def filtrar_producto_categoria_marca(id_categoria,id_marca):
+    producto_filtrado = controlador_producto.obtener_producto_por_categoria_marca(id_categoria, id_marca)
+    if producto_filtrado:
+        return jsonify(producto_filtrado)
+    else:
+        return jsonify({"mensaje": "Producto por categoria y por marca no encontrado"}), 404  
+        
+
+@app.route("/productos_filtrados_categoria/<int:id>", methods=["GET"])
+def filtrar_producto_categoria(id):
+    producto_filtrado = controlador_producto.obtener_producto_por_categoria(id)
+    if producto_filtrado:
+        return jsonify(producto_filtrado)
+    else:
+        return jsonify({"mensaje": "Producto por categoria no encontrado"}), 404  
+
+@app.route("/productos_filtrados_marca/<int:id>", methods=["GET"])
+def filtrar_producto_marca(id):
+    producto_filtrado = controlador_producto.obtener_producto_por_marca(id)
+    if producto_filtrado:
+        return jsonify(producto_filtrado)
+    else:
+        return jsonify({"mensaje": "Producto por marca no encontrado"}), 404  
+
+@app.route("/tipos_venta/<int:id>", methods=["GET"])
+def obtener_tipo_venta(id):
+    tipo_venta = controlador_tipo_venta.obtener_tipo_venta_por_id(id)
+    if tipo_venta:
+        return jsonify(tipo_venta)
+    else:
+        return jsonify({"mensaje": "Tipo venta no encontrado"}), 404   
+
+@app.route("/metodo_pagos/<int:id>", methods=["GET"])
+def obtener_metodo_pago(id):
+    metodo_pago = controlador_metodo_pago.obtener_metodo_pago_por_id(id)
+    if metodo_pago:
+        return jsonify(metodo_pago)
+    else:
+        return jsonify({"mensaje": "Metodo pago no encontrado"}), 404    
+
+@app.route("/productos/<int:id>", methods=["GET"])
+def obtener_producto(id):
+    producto = controlador_producto.obtener_producto_por_id(id)
+    if producto:
+        return jsonify(producto)
+    else:
+        return jsonify({"mensaje": "Producto no encontrado"}), 404
 
 @app.route("/clientes/<int:id>", methods=["GET"])
 def obtener_cliente(id):
@@ -51,13 +109,6 @@ def eliminar_cliente():
     return redirect("/clientes")
 
 
-@app.route("/formulario_editar_cliente/<int:id>")
-def editar_cliente(id):
-    # Obtener el disco por ID
-    cliente = controlador_cliente.obtener_cliente_por_id(id)
-    return render_template("editar_cliente.html", cliente=cliente)
-
-
 @app.route("/actualizar_cliente", methods=["POST"])
 def actualizar_cliente():
     id = request.form["id"]
@@ -66,7 +117,11 @@ def actualizar_cliente():
     dni = request.form["dni"]
     email = request.form["email"]
     telefono = request.form["telefono"]
-    vigencia = request.form["vigencia"]
+    if "vigencia" in request.form:
+        vigencia=1
+    else:
+        vigencia=0 
+
     controlador_cliente.actualizar_cliente(nombres, apellido, dni, email, telefono, vigencia, id)
     return redirect("/clientes")
 
@@ -76,7 +131,9 @@ def actualizar_cliente():
 @app.route("/productos")
 def productos():
     productos = controlador_producto.obtener_producto()
-    return render_template("productos.html", productos=productos)
+    marcas = controlador_marca.obtener_marca_vigente()
+    categorias = controlador_categoria.obtener_categoria_vigente()
+    return render_template("productos.html", productos=productos, marcas=marcas, categorias=categorias)
 
 
 @app.route("/guardar_producto", methods=["POST"])
@@ -86,8 +143,8 @@ def guardar_producto():
     precio = request.form["precio"]
     stock = request.form["stock"]
     modelo = request.form["modelo"]
-    marca_id = request.form["marca_id"]
-    categoria_id = request.form["categoria_id"]
+    marca_id = request.form.get("marca")
+    categoria_id = request.form.get("categoria")
     controlador_producto.insertar_producto(nombre, descripcion, precio, stock, modelo, marca_id, categoria_id)
     # De cualquier modo, y si todo fue bien, redireccionar
     return redirect("/productos")
@@ -98,13 +155,6 @@ def eliminar_producto():
     return redirect("/productos")
 
 
-@app.route("/formulario_editar_producto/<int:id>")
-def editar_producto(id):
-    # Obtener el disco por ID
-    producto = controlador_producto.obtener_producto_por_id(id)
-    return render_template("editar_producto.html", producto=producto)
-
-
 @app.route("/actualizar_producto", methods=["POST"])
 def actualizar_producto():
     id = request.form["id"]
@@ -113,9 +163,14 @@ def actualizar_producto():
     precio = request.form["precio"]
     stock = request.form["stock"]
     modelo = request.form["modelo"]
-    marca_id = request.form["marca_id"]
-    categoria_id = request.form["categoria_id"]
-    vigencia = request.form["vigencia"]
+    marca_id = request.form["marca"]
+    categoria_id = request.form["categoria"]
+
+    if "vigencia" in request.form:
+        vigencia=1
+    else:
+        vigencia=0  
+
     controlador_producto.actualizar_producto(nombre, descripcion, precio, stock, modelo, marca_id, categoria_id, vigencia, id)
     return redirect("/productos")
 
@@ -139,17 +194,15 @@ def eliminar_marca():
     return redirect("/marcas")
 
 
-@app.route("/formulario_editar_marca/<int:id>")
-def editar_marca(id):
-    marca = controlador_marca.obtener_marca_por_id(id)
-    return render_template("editar_marca.html", marca=marca)
-
-
 @app.route("/actualizar_marca", methods=["POST"])
 def actualizar_marca():
     id = request.form["id"]
     nombre = request.form["nombre"]
-    vigencia = request.form["vigencia"]
+
+    if "vigencia" in request.form:
+        vigencia=1
+    else:
+        vigencia=0       
     controlador_marca.actualizar_marca(nombre, vigencia, id)
     return redirect("/marcas")
 
@@ -174,19 +227,83 @@ def eliminar_categoria():
     return redirect("/categorias")
 
 
-@app.route("/formulario_editar_categoria/<int:id>")
-def editar_categoria(id):
-    categoria = controlador_categoria.obtener_categoria_por_id(id)
-    return render_template("editar_categoria.html", categoria=categoria)
-
-
 @app.route("/actualizar_categoria", methods=["POST"])
 def actualizar_categoria():
     id = request.form["id"]
     nombre = request.form["nombre"]
-    vigencia = request.form["vigencia"]
+    if "vigencia" in request.form:
+        vigencia=1
+    else:
+        vigencia=0   
     controlador_categoria.actualizar_categoria(nombre, vigencia, id)
     return redirect("/categorias")
+
+#METODO_PAGO
+@app.route("/metodo_pagos")
+def metodo_pagos():
+    metodo_pagos = controlador_metodo_pago.obtener_metodo_pago()
+    return render_template("metodo_pagos.html", metodo_pagos=metodo_pagos)
+
+
+@app.route("/guardar_metodo_pago", methods=["POST"])
+def guardar_metodo_pago():
+    nombre = request.form["nombre"]
+
+    controlador_metodo_pago.insertar_metodo_pago(nombre)
+    return redirect("/metodo_pagos")
+
+
+@app.route("/eliminar_metodo_pago", methods=["POST"])
+def eliminar_metodo_pago():
+    controlador_metodo_pago.eliminar_metodo_pago(request.form["id"])
+    return redirect("/metodo_pagos")
+
+
+@app.route("/actualizar_metodo_pago", methods=["POST"])
+def actualizar_metodo_pago():
+    id = request.form["id"]
+    nombre = request.form["nombre"]
+    if "vigencia" in request.form:
+        vigencia=1
+    else:
+        vigencia=0
+
+    controlador_metodo_pago.actualizar_metodo_pago(nombre, vigencia, id)
+    return redirect("/metodo_pagos")
+
+#TIPO VENTA
+@app.route("/tipos_venta")
+def tipos_venta():
+    tipos_venta = controlador_tipo_venta.obtener_tipos_venta()
+    return render_template("tipos_venta.html", tipos_venta=tipos_venta)
+
+
+@app.route("/guardar_tipo_venta", methods=["POST"])
+def guardar_tipo_venta():
+    nombre = request.form["nombre"]
+
+    controlador_tipo_venta.insertar_tipo_venta(nombre)
+    return redirect("/tipos_venta")
+
+
+@app.route("/eliminar_tipo_venta", methods=["POST"])
+def eliminar_tipo_venta():
+    controlador_tipo_venta.eliminar_tipo_venta(request.form["id"])
+    return redirect("/tipos_venta")
+
+
+@app.route("/actualizar_tipo_venta", methods=["POST"])
+def actualizar_tipo_venta():
+    id = request.form["id"]
+    nombre = request.form["nombre"]
+    if "vigencia" in request.form:
+        vigencia = 1
+    else:
+        vigencia = 0
+
+    controlador_tipo_venta.actualizar_tipo_venta(nombre, vigencia, id)
+    return redirect("/tipos_venta")
+
 
 #VENTA
 @app.route("/ventas")
@@ -197,7 +314,11 @@ def ventas():
 
 @app.route("/agregar_venta")
 def formulario_agregar_venta():
-    return render_template("agregar_venta.html")
+    tipos_venta = controlador_tipo_venta.obtener_tipos_venta_vigentes()
+    metodo_pagos = controlador_metodo_pago.obtener_metodo_pago_vigente()
+    categorias = controlador_categoria.obtener_categoria_vigente()
+    marcas = controlador_marca.obtener_marca_vigente()
+    return render_template("agregar_venta.html", categorias=categorias, tipos_venta=tipos_venta, metodo_pagos= metodo_pagos, marcas=marcas)
 
 
 @app.route("/guardar_venta", methods=["POST"])

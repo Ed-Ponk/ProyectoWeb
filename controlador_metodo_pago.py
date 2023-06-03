@@ -14,11 +14,19 @@ def obtener_metodo_pago():
     conexion = obtener_conexion()
     metodos_pago = []
     with conexion.cursor() as cursor:
-        cursor.execute("SELECT * FROM metodo_pago where vigencia=true")
+        cursor.execute("SELECT id_metodo_pago, nombre, CASE WHEN vigencia THEN 'Vigente' ELSE 'No Vigente' END as vigencia FROM metodo_pago order by id_metodo_pago")
         metodos_pago = cursor.fetchall()
     conexion.close()
     return metodos_pago
 
+def obtener_metodo_pago_vigente():
+    conexion = obtener_conexion()
+    metodo_pagos = []
+    with conexion.cursor() as cursor:
+        cursor.execute("SELECT * FROM metodo_pago where vigencia=true")
+        metodo_pagos = cursor.fetchall()
+    conexion.close()
+    return metodo_pagos
 
 def eliminar_metodo_pago(id):
     conexion = obtener_conexion()
@@ -47,13 +55,4 @@ def actualizar_metodo_pago(nombre, vigencia, id_metodo_pago):
     conexion.close()
 
 
-#extra
-def obtener_metodo_pago_por_name(name):
-    conexion = obtener_conexion()
-    metodo_pago = None
-    with conexion.cursor() as cursor:
-        cursor.execute(
-            "SELECT * FROM metodo_pago WHERE nombre = %s", (name,))
-        metodo_pago = cursor.fetchone()
-    conexion.close()
-    return metodo_pago
+

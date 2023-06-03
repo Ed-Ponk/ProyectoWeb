@@ -1,7 +1,11 @@
 {% extends "maestra.html" %}
 {% block titulo %} Agregar venta {% endblock %}
+{% block jsventa_registro %}
+<script src="{{ url_for('static', filename='js/venta.js') }}"></script>{% endblock %}
 
-{%block cssAddSale %} <link rel="stylesheet" href="{{ url_for('static', filename='styles/addSale.css') }}"> {% endblock %}
+{%block cssAddSale %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/addSale.css') }}"> {% endblock %}
+
 {% block contenido %}
 <section class="section">
   <div class="container--sale">
@@ -33,35 +37,41 @@
         <h4 class="title-data">Datos de venta</h4>
         <div class="sale-info">
           <label for="sale_type" class="sale_type">Tipo venta:</label>
-          <select class="select" name="tipo_venta" id="tipo_venta">
-            <option value="tipo_venta1">Factura</option>
-            <option value="tipo_venta2">Boleta</option>
-            <option value="tipo_venta3">Categoría 3</option>
-            <!-- Agrega aquí más opciones las categorías -->
+          <select class="tipo-venta-select" name="tipo_venta" id="tipo_venta">
+            <option value="default">--Seleccione tipo de venta--</option>
+            {% for tipo_venta in tipos_venta %}
+            <option value="{{tipo_venta[0]}}">{{tipo_venta[1]}}</option>
+            {% endfor %}
           </select>
           <label for="payment_method" class="payment_method">Método de pago:</label>
-          <select class="select" name="metodo_pago" id="metodo_pago">
-            <option value="metodo_pago1">Método 1</option>
-            <option value="metodo_pago2">Método 2</option>
-            <option value="metodo_pago3">Método 3</option>
-            <!-- Agrega aquí más opciones las categorías -->
+          <select class="metodo-pago-select" name="metodo_pago" id="metodo_pago">
+            <option value="default">--Seleccione método de pago--</option>
+            {% for metodo_pago in metodo_pagos %}
+            <option value="{{metodo_pago[0]}}">{{metodo_pago[1]}}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
 
       <div class="container--product--data">
         <h4 class="title-data">Datos de producto</h4>
-        <select class="category-select">
-          <!-- opciones de categoría -->
+        <select class="category-select" onchange="filtroProducto()">
+          <option value="default">--Seleccione Categoría--</option>
+          {% for categoria in categorias %}
+          <option value="{{categoria[0]}}">{{categoria[1]}}</option>
+          {% endfor %}
         </select>
-        <select class="brand-select">
-          <!-- opciones de marca -->
+        <select class="brand-select" onchange="filtroProducto()">
+          <option value="default">--Seleccione Marca--</option>
+          {% for marca in marcas %}
+          <option value="{{marca[0]}}">{{marca[1]}}</option>
+          {% endfor %}
         </select>
-        <select class="product-select">
-          <!-- opciones de producto -->
+        <select class="product-select" onchange="obtenerStockPrecio()">
+          <option value="default">--Seleccione Producto--</option>
         </select>
-        <input type="text" class="stock-input" placeholder="Stock">
-        <input type="text" class="price-input" placeholder="Precio">
+        <input value="" type="text" class="stock-input" placeholder="Stock" readonly>
+        <input value="" type="text" class="price-input" placeholder="Precio" readonly>
         <input type="text" class="quantity-input" placeholder="Cantidad">
         <button class="add-product-button">Agregar producto</button>
       </div>

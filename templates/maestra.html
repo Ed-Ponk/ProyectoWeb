@@ -31,11 +31,16 @@
 
         <ul class="list__show">
           <li class="list__inside">
+            <a href="{{url_for('formulario_agregar_venta')}}" class="nav__link nav__link--inside">Registrar venta</a>
+          </li>
+          <li class="list__inside">
             <a href="{{url_for('ventas')}}" class="nav__link nav__link--inside">Ventas HOY</a>
           </li>
-
           <li class="list__inside">
-            <a href="{{url_for('formulario_agregar_venta')}}" class="nav__link nav__link--inside">Registrar venta</a>
+            <a href="{{url_for('metodo_pagos')}}" class="nav__link nav__link--inside">Método de pago</a>
+          </li>
+          <li class="list__inside">
+            <a href="{{url_for('tipos_venta')}}" class="nav__link nav__link--inside">Tipo de venta</a>
           </li>
         </ul>
 
@@ -96,6 +101,10 @@
   {% block edit %} {% endblock %}
   
   <script src="{{ url_for('static', filename='js/maestra.js') }}"></script>
+  {% block jsedit %} {% endblock %}
+  {% block jsventa_registro %} {% endblock %}
+
+
 </body>
 
 </html>

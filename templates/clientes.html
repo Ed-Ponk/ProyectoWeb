@@ -1,5 +1,8 @@
 {% extends "maestra.html" %}
 {% block titulo %} Clientes {% endblock %}
+{% block jsedit %}<script src="{{ url_for('static', filename='js/cliente.js') }}"></script>{% endblock %}
+
+
 {% block contenido %}
 
 <section class="section">
@@ -99,8 +102,10 @@
             <input value="" required type="email" class="input input-email" placeholder="Email" name="email" id="email">
             <label for="telefono" class="item__add">Teléfono:</label>
             <input value="" required type="text" class="input input-telefono" placeholder="Teléfono" name="telefono" id="telefono">
-            <label for="vigencia" class="item__add">Vigencia:</label>
-            <input value="" required type="text" class="input input-vigencia" placeholder="Vigencia" name="vigencia" id="vigencia">
+            
+            <label for="vigenciaCheckbox" class="item__add">Vigencia:</label>
+            <input type="checkbox" id="vigenciaCheckbox" class="chkVigencia" name="vigencia" value="">
+            <label for="miCheckbox">(Vigente)</label>
 
 
             <div class="container__save">

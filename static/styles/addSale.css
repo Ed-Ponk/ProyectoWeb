@@ -112,7 +112,9 @@
 .product-select,
 .stock-input,
 .price-input,
-.quantity-input {
+.quantity-input, 
+.metodo-pago-select, 
+.tipo-venta-select {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
