@@ -134,6 +134,14 @@ body {
     font-size: 17px;
 }
 
+.button.is-see {
+    background-color: #4ac675;
+    width: 6rem;
+    height: 40px;
+    color: white;
+    font-size: 17px;
+}
+
 .button.is-info {
     background-color: #3198db;
     width: 6rem;

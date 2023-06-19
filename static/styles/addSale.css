@@ -2,6 +2,10 @@
   padding: 20px;
 }
 
+.form__save{
+  float: right;
+}
+
 .container--sale {
   display: flex;
   flex-direction: column;
@@ -145,3 +149,11 @@
   margin-left: 30%;
 }
 
+.container--table {
+  max-height: 400px; /* Establece la altura máxima deseada */
+  overflow-y: auto; /* Agrega un scroll vertical cuando se excede el límite */
+}
+
+.table {
+  width: 100%; /* Opcional: Ajusta el ancho de la tabla al 100% del contenedor */
+}

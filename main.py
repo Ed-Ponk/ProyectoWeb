@@ -1,7 +1,22 @@
-from flask import Flask, render_template, request, redirect, flash, jsonify
+from flask import Flask, render_template, request, redirect, flash, jsonify, Response
 import controlador_cliente, controlador_categoria, controlador_detalle_venta, controlador_marca, controlador_metodo_pago, controlador_producto, controlador_venta, controlador_tipo_venta
+import json
+from datetime import datetime
 
 app = Flask(__name__)
+
+
+@app.template_filter('strftime')
+def format_datetime(value, format='%Y-%m-%d'):
+    return value.strftime(format)
+
+@app.route("/buscar_cliente/<string:dni>", methods=["GET"])
+def buscar_cliente(dni):
+    cliente = controlador_cliente.buscar_cliente_por_dni(dni)
+    if cliente:
+        return jsonify(cliente)
+    else:
+        return jsonify({"mensaje": "Cliente no encontrado"}) , 404 
 
 
 @app.route("/productos_stock_precio/<int:id>", methods=["GET"])
@@ -308,7 +323,7 @@ def actualizar_tipo_venta():
 #VENTA
 @app.route("/ventas")
 def ventas():
-    ventas = controlador_venta.obtener_venta()
+    ventas = controlador_venta.obtener_venta_filtro()
     return render_template("ventas.html", ventas=ventas)
 
 
@@ -318,19 +333,40 @@ def formulario_agregar_venta():
     metodo_pagos = controlador_metodo_pago.obtener_metodo_pago_vigente()
     categorias = controlador_categoria.obtener_categoria_vigente()
     marcas = controlador_marca.obtener_marca_vigente()
-    return render_template("agregar_venta.html", categorias=categorias, tipos_venta=tipos_venta, metodo_pagos= metodo_pagos, marcas=marcas)
+    fecha_actual = datetime.now()
+    usuario = controlador_venta.obtener_usuario()
+    return render_template("agregar_venta.html", categorias=categorias, tipos_venta=tipos_venta, metodo_pagos= metodo_pagos, marcas=marcas, fecha_actual=fecha_actual, usuario=usuario)
 
 
 @app.route("/guardar_venta", methods=["POST"])
 def guardar_venta():
     cliente = request.form["cliente"]
     metodo_pago = request.form["metodo_pago"]
+    tipo_venta = request.form["tipo_venta"]
     empleado = request.form["empleado"]
     fecha = request.form["fecha"]
     total = request.form["total"]
-    controlador_venta.insertar_venta(cliente, metodo_pago, empleado, fecha, total)
-    return redirect("/ventas")
+    controlador_venta.insertar_venta(fecha, total, cliente, metodo_pago, empleado, tipo_venta)
 
+    response = Response(status=204)
+    return response
+
+
+@app.route("/guardar_detalle_venta", methods=["POST"])
+def guardar_detalle_venta():
+    venta_id = controlador_venta.obtener_id_ultimo()
+
+    detalle_venta = json.loads(request.data) 
+
+    for grupo_producto in detalle_venta:
+        cantidad = grupo_producto["cantidad"]
+        precio_unitario = grupo_producto["precio"]
+        subtotal = grupo_producto["importe"]
+        producto_id = grupo_producto["idProducto"]
+
+        controlador_detalle_venta.insertar_detalle_venta(cantidad, precio_unitario, subtotal, venta_id, producto_id)
+
+    return jsonify({"message": "Detalle de venta guardado correctamente"})
 
 @app.route("/eliminar_venta", methods=["POST"])
 def eliminar_venta():

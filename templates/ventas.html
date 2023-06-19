@@ -13,11 +13,13 @@
                         <th>Código</th>
                         <th>Cliente</th>
                         <th>Método de Pago</th>
+                        <th>Tipo de venta</th>
                         <th>Empleado</th>
                         <th>Fecha</th>
                         <th>Total</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
+                        <th>Ver detalle</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +31,7 @@
                         <td>{{venta[3]}}</td>
                         <td>{{venta[4]}}</td>
                         <td>{{venta[5]}}</td>
+                        <td>{{venta[6]}}</td>
                         <td>
                             <a href="{{url_for('editar_venta', id=venta[0])}}" class="button is-info">Editar</a>
                         </td>
@@ -37,6 +40,9 @@
                                 <input type="hidden" name="id" value="{{venta[0]}}">
                                 <button class="button is-danger">Eliminar</button>
                             </form>
+                        </td>
+                        <td>
+                            <a href="" class="button is-see">Ver</a>
                         </td>
                     </tr>
                     {% endfor %}

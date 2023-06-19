@@ -46,3 +46,14 @@ def actualizar_cliente(nombres, apellido, dni, email, telefono, vigencia, id_cli
                        (nombres, apellido, dni, email, telefono, vigencia, id_cliente))
     conexion.commit()
     conexion.close()
+
+
+def buscar_cliente_por_dni(dni):
+    conexion = obtener_conexion()
+    cliente = None
+    with conexion.cursor() as cursor:
+        cursor.execute(
+            "select id_cliente, CONCAT(nombres,' ',apellido) as full_name from cliente where dni= %s and vigencia=true", (dni,))
+        cliente = cursor.fetchone()
+    conexion.close()
+    return cliente
